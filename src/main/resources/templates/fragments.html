@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:hx="http://www.w3.org/1999/xhtml"
+      lang="en">
+<!--/*@thymesVar id="item" type="com.wimdeblauwe.examples.todomvcthymeleaf.todoitem.web.TodoItemController.TodoItemDto"*/-->
+<li th:fragment="todoItem(item)" th:classappend="${item.completed?'completed':''}">
+    <div class="view">
+        <form th:action="@{/{id}/toggle(id=${item.id})}" th:method="post">
+            <input class="toggle" type="checkbox"
+                   onchange="this.form.requestSubmit()"
+                   th:attrappend="checked=${item.completed?'true':null}">
+            <label th:text="${item.title}">Taste JavaScript</label>
+        </form>
+<!--        <form th:action="@{/{id}(id=${item.id})}" th:method="delete">-->
+<!--            <button class="destroy"></button>-->
+<!--        </form>-->
+        <button class="destroy"
+                hx:delete="@{/{id}(id=${item.id})}"
+                hx:target="|#list-item-${item.id}|"
+                hx-trigger="click"
+                hx-swap="outerHTML"
+        ></button>
+    </div>
+    <input class="edit" value="Create a TodoMVC template">
+</li>
+</html>
